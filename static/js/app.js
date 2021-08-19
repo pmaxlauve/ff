@@ -1,32 +1,32 @@
-var newId = 4
-var newTest = {'name':null, 'id':newId, 'result':null}
+// var newId = 4
+// var newTest = {'name':null, 'id':newId, 'result':null}
 
-$('#add-test').on('click', function(){
-    $('.form-wrapper').removeClass('hidden')
-})
+// $('#add-test').on('click', function(){
+//     $('.form-wrapper').removeClass('hidden')
+// })
 
 
-$('#test-result').on('keyup', function(){
-    newTest.result = $(this).val()
-    console.log(newTest)
+// $('#test-result').on('keyup', function(){
+//     newTest.result = $(this).val()
+//     console.log(newTest)
 
-})
+// })
 
-$('#test-name').on('change', function(){
-    newTest.name = $(this).val()
-    console.log(newTest)
-})
+// $('#test-name').on('change', function(){
+//     newTest.name = $(this).val()
+//     console.log(newTest)
+// })
 
-$('#create-test').on('click', function(){
-    if(newTest.name == null){
-        alert('No test selected!')
-    }else{
-        addRow(newTest)
-        $('#test-name').val('')
-        $('#test-result').val('')
-        $('.form-wrapper').addClass('hidden')
-    }
-})
+// $('#create-test').on('click', function(){
+//     if(newTest.name == null){
+//         alert('No test selected!')
+//     }else{
+//         addRow(newTest)
+//         $('#test-name').val('')
+//         $('#test-result').val('')
+//         $('.form-wrapper').addClass('hidden')
+//     }
+// })
 
 
 
@@ -39,7 +39,7 @@ for (var i in data){
 function addRow(obj){
     var row = `<tr scope="row" class="test-row-${obj.id}">
                    <td>${obj.name}</td>
-                   <td id="result-${obj.id}" data-testid="${obj.id}">${obj.pos}</td>
+                   <td>${obj.pos}</td>
                    <td>${obj.rank}</td>
                    <td>${obj.tier}</td>
                    <td>${obj.ecr}</td>
@@ -62,25 +62,25 @@ function addRow(obj){
     $(`#save-${obj.id}`).on('click', saveUpdate)
 
 
-    $(`#result-${obj.id}`).on('click', editResult)
+    // $(`#result-${obj.id}`).on('click', editResult)
     
 }
 
-function editResult(){
-    var testid = $(this).data('testid')
-    var value = $(this).html()
+// function editResult(){
+//     var testid = $(this).data('testid')
+//     var value = $(this).html()
 
-    $(this).unbind()
-    $(this).html(`<input class="result form-control" data-testid="${testid}" type="text" value="${value}">`)
+//     $(this).unbind()
+//     $(this).html(`<input class="result form-control" data-testid="${testid}" type="text" value="${value}">`)
 
-    $(`.result`).on('keyup', function(){
-        var testid = $(this).data('testid')
-        var saveBtn = $(`#save-${testid}`)
-        saveBtn.prop('disabled', false)
+//     $(`.result`).on('keyup', function(){
+//         var testid = $(this).data('testid')
+//         var saveBtn = $(`#save-${testid}`)
+//         saveBtn.prop('disabled', false)
 
-    })
+//     })
 
-}
+// }
 
 function saveUpdate(){
     console.log('Saved!')
@@ -114,6 +114,11 @@ function deleteTest(){
 
     cancelBtn.removeClass('hidden')
     confirmBtn.removeClass('hidden')
+
+    var row = $(`.test-row-${testid}`)
+    row.css('background-color', '#111734')
+
+    
 }
 
 function cancelDeletion(){
