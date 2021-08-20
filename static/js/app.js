@@ -39,6 +39,12 @@ for (var i in data){
 function addRow(obj){
     var row = `<tr scope="row" class="test-row-${obj.id} pos-${obj.pos}">
                    <td><a href="https://www.fantasypros.com/nfl/players/${obj.name.toLowerCase().replaceAll(' ', '-')}.php" onClick="return popup(this, 'notes')">${obj.name}</a></td>
+                   <td>
+
+                   <button class="btn btn-xs btn-outline-info" data-testid=${obj.id}  id="mark-${obj.id}">Mark Player</button>
+                   <button class="btn btn-xs btn-info hidden" data-testid=${obj.id}  id="unmark-${obj.id}">Marked</button>
+
+                   </td>
                    <td>${obj.pos}</td>
                    <td>${obj.rank}</td>
                    <td>${obj.tier}</td>
@@ -46,8 +52,12 @@ function addRow(obj){
                    <td>${obj.team}</td>
                    <td>${obj.bye}</td>
                    <td>
-                           <button class="btn btn-sm btn-danger" data-testid=${obj.id} id="delete-${obj.id}">Remove</button>
+                           
                            <button class="btn btn-sm btn-info" data-testid=${obj.id}  id="save-${obj.id}">Draft</button>
+                           <button class="btn btn-sm btn-danger" data-testid=${obj.id} id="delete-${obj.id}">Remove</button>
+
+                           <button class="btn btn-sm btn-danger hidden" data-testid=${obj.id} id="undraft-${obj.id}">Undo</button>
+
                            
                            <button class="btn btn-sm btn-danger hidden" data-testid="${obj.id}"  id="cancel-${obj.id}">Cancel</button>
                            <button class="btn btn-sm btn-primary hidden" data-testid="${obj.id}"  id="confirm-${obj.id}">Confirm</button>
@@ -61,6 +71,11 @@ function addRow(obj){
     $(`#cancel-${obj.id}`).on('click', cancelDeletion)
     $(`#confirm-${obj.id}`).on('click', confirmDeletion)
     $(`#save-${obj.id}`).on('click', saveUpdate)
+
+    $(`#undraft-${obj.id}`).on('click', undoPick)
+    $(`#mark-${obj.id}`).on('click', markPlayer)
+    $(`#unmark-${obj.id}`).on('click', unmarkPlayer)
+
 
     var all = d3.select(".filterAll")
     var rb = d3.select(".filterRb")
@@ -168,15 +183,75 @@ function filterRb(){
 
 // }
 
+
+function markPlayer(){
+
+    var testid = $(this).data('testid')
+    var row = $(`.test-row-${testid}`)
+    var markBtn = $(`#mark-${testid}`)
+    var unmarkBtn = $(`#unmark-${testid}`)
+
+    markBtn.addClass('hidden')
+    unmarkBtn.removeClass('hidden')
+
+    row.css('background-color', '#202020')
+
+}
+
+
+function unmarkPlayer(){
+
+    var testid = $(this).data('testid')
+    var row = $(`.test-row-${testid}`)
+    var markBtn = $(`#mark-${testid}`)
+    var unmarkBtn = $(`#unmark-${testid}`)
+
+    unmarkBtn.addClass('hidden')
+    markBtn.removeClass('hidden')
+
+    row.css('background-color', 'rgba(255,255,255,0)')
+}
+
+
+function undoPick(){
+
+    var testid = $(this).data('testid')
+    var saveBtn = $(`#save-${testid}`)
+    var row = $(`.test-row-${testid}`)
+    var undraftBtn = $(`#undraft-${testid}`)
+    var deleteBtn = $(`#delete-${testid}`)
+    var markBtn = $(`#mark-${testid}`)
+    
+    markBtn.removeClass('hidden')
+
+    undraftBtn.addClass('hidden')
+    deleteBtn.removeClass('hidden')
+    
+    saveBtn.removeClass('hidden')
+
+    row.css('background-color', 'rgba(255,255,255,0)')
+
+    }
+
 function saveUpdate(){
     console.log('Saved!')
     var testid = $(this).data('testid')
     var saveBtn = $(`#save-${testid}`)
     var row = $(`.test-row-${testid}`)
+    var undraftBtn = $(`#undraft-${testid}`)
+    var deleteBtn = $(`#delete-${testid}`)
+    var markBtn = $(`#mark-${testid}`)
+    var unmarkBtn = $(`#unmark-${testid}`)
 
-    saveBtn.prop('disabled', true)
+    markBtn.addClass('hidden')
+    unmarkBtn.addClass('hidden')
+
+    undraftBtn.removeClass('hidden')
+    deleteBtn.addClass('hidden')
+
+    saveBtn.addClass('hidden')
     
-    row.css('opacity', "0.5")
+    
     row.css('background-color', '#111734')
 
     // setTimeout(function(){
@@ -201,7 +276,7 @@ function popup(mylink, windowname) {
     if (! window.focus)return true; 
     var href; 
     if (typeof(mylink) == 'string') href=mylink; 
-    else href=mylink.href; window.open(href, windowname, 'width=1200,height=1200,scrollbars=yes,top=150,left=900'); 
+    else href=mylink.href; window.open(href, windowname, 'width=1200,height=1200,scrollbars=yes,top=150,left=1200'); 
     return false; }
 
 
@@ -238,6 +313,9 @@ function cancelDeletion(){
     var cancelBtn = $(`#cancel-${testid}`)
     var confirmBtn = $(`#confirm-${testid}`)
     var row = $(`.test-row-${testid}`)
+    var saveBtn = $(`#save-${testid}`)
+
+    saveBtn.prop('disabled', false)
 
     row.css('background-color', 'rgba(255,255,255,0)')
 
