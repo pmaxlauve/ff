@@ -237,6 +237,9 @@ function cancelDeletion(){
     var saveBtn = $(`#save-${testid}`)
     var cancelBtn = $(`#cancel-${testid}`)
     var confirmBtn = $(`#confirm-${testid}`)
+    var row = $(`.test-row-${testid}`)
+
+    row.css('background-color', 'rgba(255,255,255,0)')
 
     deleteBtn.removeClass('hidden')
     saveBtn.removeClass('hidden')
