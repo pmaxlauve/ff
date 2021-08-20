@@ -273,10 +273,14 @@ function saveUpdate(){
 
 
 function popup(mylink, windowname) { 
+
+    var myWidth = window.innerWidth
+    var myHeight = window.innerHeight
+
     if (! window.focus)return true; 
     var href; 
     if (typeof(mylink) == 'string') href=mylink; 
-    else href=mylink.href; window.open(href, windowname, 'width=1200,height=1200,scrollbars=yes,top=150,left=1200'); 
+    else href=mylink.href; window.open(href, windowname, `width=${myWidth*0.4},height=${myHeight*0.8},scrollbars=yes,top=${myHeight*0.1},left=${myWidth*0.55}`); 
     return false; }
 
 
