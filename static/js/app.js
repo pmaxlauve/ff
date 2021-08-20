@@ -38,7 +38,7 @@ for (var i in data){
 
 function addRow(obj){
     var row = `<tr scope="row" class="test-row-${obj.id}">
-                   <td><a href="https://www.google.com/search?q=${obj.name}+fantasy+news" onClick="return popup(this, 'notes')">${obj.name}</a></td>
+                   <td><a href="https://www.fantasypros.com/nfl/players/${obj.name.toLowerCase().replaceAll(' ', '-')}.php" onClick="return popup(this, 'notes')">${obj.name}</a></td>
                    <td>${obj.pos}</td>
                    <td>${obj.rank}</td>
                    <td>${obj.tier}</td>
