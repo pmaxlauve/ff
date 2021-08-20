@@ -29,7 +29,7 @@
 // })
 
 
-
+// https://www.google.com/search?q=dalvin+cook+CAR+news
 
 
 for (var i in data){
@@ -38,7 +38,7 @@ for (var i in data){
 
 function addRow(obj){
     var row = `<tr scope="row" class="test-row-${obj.id}">
-                   <td>${obj.name}</td>
+                   <td><a href="https://www.google.com/search?q=${obj.name}+fantasy+news" onClick="return popup(this, 'notes')">${obj.name}</a></td>
                    <td>${obj.pos}</td>
                    <td>${obj.rank}</td>
                    <td>${obj.tier}</td>
@@ -56,10 +56,12 @@ function addRow(obj){
                </tr>`
     $('#tests-table').append(row)
 
+    
     $(`#delete-${obj.id}`).on('click', deleteTest)
     $(`#cancel-${obj.id}`).on('click', cancelDeletion)
     $(`#confirm-${obj.id}`).on('click', confirmDeletion)
     $(`#save-${obj.id}`).on('click', saveUpdate)
+    
 
 
     // $(`#result-${obj.id}`).on('click', editResult)
@@ -101,6 +103,25 @@ function saveUpdate(){
 }
 
 
+// function colorChange(){
+//     var testid = $(this).data('testid')
+    
+//     var row = $(`.test-row-${testid}`)
+
+//     row.css('background-color', '#65291B')
+
+// }
+
+
+function popup(mylink, windowname) { 
+    if (! window.focus)return true; 
+    var href; 
+    if (typeof(mylink) == 'string') href=mylink; 
+    else href=mylink.href; window.open(href, windowname, 'width=800,height=1200,scrollbars=yes,top=150,left=900'); 
+    return false; }
+
+
+
 function deleteTest(){
     var testid = $(this).data('testid')
 
@@ -108,6 +129,9 @@ function deleteTest(){
     var saveBtn = $(`#save-${testid}`)
     var cancelBtn = $(`#cancel-${testid}`)
     var confirmBtn = $(`#confirm-${testid}`)
+    var row = $(`.test-row-${testid}`)
+
+    row.css('background-color', '#65291B')
 
     deleteBtn.addClass('hidden')
     saveBtn.addClass('hidden')
@@ -115,8 +139,9 @@ function deleteTest(){
     cancelBtn.removeClass('hidden')
     confirmBtn.removeClass('hidden')
 
-    var row = $(`.test-row-${testid}`)
-    row.css('background-color', '#111734')
+    
+
+    
 
     
 }
